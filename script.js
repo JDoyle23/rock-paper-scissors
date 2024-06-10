@@ -21,7 +21,6 @@ function getHumanChoice() {
 
 
 // declare the score variables
-
 let humanScore = 0
 let computerScore = 0
 
