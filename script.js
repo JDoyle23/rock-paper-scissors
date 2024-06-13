@@ -1,54 +1,127 @@
+// Get the correct labels for the three variables
+const rock = document.querySelector("#rock");
+const paper = document.querySelector("#paper");
+const scissors = document.querySelector("#scissors");
+const results = document.querySelector("#results");
+const selections = document.querySelector("#selections");
+
+let userInput = "";
+let computerInput = "";
+let playerScore = 0;
+let computerScore = 0;
+let roundCount = 0;
+
+// Create function to get human choice
+function getHumanChoice() {
+    rock.onclick = () => {
+        userInput = "rock";
+        playRound();
+    };
+    paper.onclick = () => {
+        userInput = "paper";
+        playRound();
+    };
+    scissors.onclick = () => {
+        userInput = "scissors";
+        playRound();
+    };
+}
+
+// Create function to get computer choice
 function getComputerChoice() {
     const decisions = ["rock", "paper", "scissors"];
     const randomIndex = Math.floor(Math.random() * decisions.length);
     return decisions[randomIndex];
 }
 
-// Function to get human choice
-function getHumanChoice() {
-    let userInput = prompt("Enter your choice (rock, paper, or scissors):");
-    userInput = userInput ? userInput.trim().toLowerCase() : "";
-    if (userInput !== 'rock' && userInput !== 'paper' && userInput !== 'scissors') {
-        alert("Please enter a valid option (rock, paper, or scissors).");
-        return getHumanChoice();
-    }
-    return userInput;
+// Declare what happens when you win, lose, or draw
+function youWin() {
+    let div = document.createElement("div");
+    div.textContent = "You Win!";
+    results.appendChild(div);
 }
 
-// Declare the score variables
-let humanScore = 0;
-let computerScore = 0;
+function youDraw() {
+    let div = document.createElement("div");
+    div.textContent = "Draw!";
+    results.appendChild(div);
+}
 
-// Function to play a single round
+function youLose() {
+    let div = document.createElement("div");
+    div.textContent = "You Lose!";
+    results.appendChild(div);
+}
+
+function showSelections() {
+    let div = document.createElement("div");
+    div.textContent = `Your Selection: ${userInput} vs. Computer Selection: ${computerInput}`;
+    selections.appendChild(div);
+}
+
+function gameOver() {
+    let div = document.createElement("div");
+    div.textContent = "Game Over!";
+    results.appendChild(div);
+}
+
+function winningGame() {
+    let div = document.createElement("div");
+    div.textContent = "You win this game!";
+    results.appendChild(div);
+}
+
+function losingGame() {
+    let div = document.createElement("div");
+    div.textContent = "You lose this game!";
+    results.appendChild(div);
+}
+
+// Declare the function for one round
 function playRound() {
-    const computerDecision = getComputerChoice();
-    const humanChoice = getHumanChoice();
+    if (roundCount >= 5) {
+        return; // End the game if 5 rounds are already played
+    }
 
-    console.log("Human choice: ", humanChoice);
-    console.log("Computer choice: ", computerDecision);
+    computerInput = getComputerChoice();
+    showSelections();
 
-    if (humanChoice === computerDecision) {
-        alert("Draw!");
-    } else if ((humanChoice === 'rock' && computerDecision === 'scissors') || 
-               (humanChoice === 'paper' && computerDecision === 'rock') || 
-               (humanChoice === 'scissors' && computerDecision === 'paper')) {
-        alert(`You win! Your choice: ${humanChoice}  Computer choice: ${computerDecision}`);
-        humanScore++;
+    if ((userInput === "rock" && computerInput === "scissors") ||
+        (userInput === "paper" && computerInput === "rock") ||
+        (userInput === "scissors" && computerInput === "paper")) {
+        youWin();
+        playerScore++;
+    } else if (userInput === computerInput) {
+        youDraw();
     } else {
-        alert(`Computer wins! Your choice: ${humanChoice}  Computer choice: ${computerDecision}`);
+        youLose();
         computerScore++;
     }
 
-    console.log("Current Human score: ", humanScore);
-    console.log("Current Computer score: ", computerScore);
+    roundCount++;
+
+    if (roundCount === 5) {
+        gameOver();
+
+        if (playerScore > computerScore) {
+            winningGame();
+        } else if (playerScore < computerScore) {
+            losingGame();
+        } else {
+            youDraw();
+        }
+    }
 }
 
-// Play 5 rounds
-for (let i = 0; i < 5; i++) {
-    console.log(`Round ${i + 1}:`);
-    playRound();
-}
+// Initialize the game
+getHumanChoice();
 
-console.log("Final Scores: ");
-console.log("Human score: ", humanScore);
-console.log("Computer score: ", computerScore);
+
+
+
+
+
+
+
+
+
