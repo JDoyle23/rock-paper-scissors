@@ -32,6 +32,13 @@ function playRound(human, computer) {
     } 
 }
 
-playRound(getHumanChoice(), getComputerChoice());
+const computerDecision = getComputerChoice();
+const humanDecision = getHumanChoice();
+
+playRound(humanDecision, computerDecision);
+
+console.log(computerDecision);
+console.log(humanDecision);
+
 console.log(humanScore);
 console.log(computerScore);
