@@ -16,29 +16,34 @@ function getHumanChoice() {
     return humanChoice.toLowerCase();
 }
 
-let humanScore = 0
-let computerScore = 0
+let humanScore = 0;
+let computerScore = 0;
+let gameNumber = 0;
 
 //create function playRound to compare the two choices and increment scores accordingly
 function playRound(human, computer) {
     if (human === "rock" && computer === "rock" || human === "scissors" && computer === "scissors" || human === "paper" && computer === "paper") {
         alert(`You draw! Your choice: ${human} Computer choice: ${computer}`);
+        gameNumber++;
     } else if (human === "rock" && computer === "scissors" || human === "paper" && computer === "rock" || human === "scissors" && computer === "paper") {
         alert(`You win! Your choice: ${human} Computer choice: ${computer}`);
-        return humanScore++;        
+        humanScore++;
+        gameNumber++;        
     } else {
         alert(`You lose! Your choice: ${human} Computer choice: ${computer}`);
-        return computerScore++;
+       computerScore++;
+       gameNumber++;
     } 
 }
 
-const computerDecision = getComputerChoice();
-const humanDecision = getHumanChoice();
+function game () {
+    for (let i = 0; i < 5; i++) {
+        playRound(getHumanChoice(), getComputerChoice());
+    }
+}
 
-playRound(humanDecision, computerDecision);
+game();
 
-console.log(computerDecision);
-console.log(humanDecision);
-
-console.log(humanScore);
-console.log(computerScore);
+console.log("Human score: " + humanScore);
+console.log("Computer score: " + computerScore);
+console.log("Game number: " + gameNumber);
